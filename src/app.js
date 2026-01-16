@@ -11,6 +11,22 @@ const app = express();
 
 app.use(cors());
 
+// Health check endpoint for Render
+app.get("/", (req, res) => {
+  res.json({
+    status: "success",
+    message: "AdvanceEdu Backend API is running",
+    timestamp: new Date().toISOString(),
+    endpoints: {
+      auth: "/api/auth",
+      users: "/api/users",
+      products: "/api/products",
+      orders: "/api/orders",
+      webhook: "/api/webhook"
+    }
+  });
+});
+
 // ❌ DO NOT apply express.json() globally before webhook
 app.use("/api/webhook", express.raw({ type: "application/json" }));
 

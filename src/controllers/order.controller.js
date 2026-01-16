@@ -22,13 +22,18 @@ exports.createOrder = asyncHandler(async (req, res) => {
 
   // Create Stripe PaymentIntent
   const paymentIntent = await stripe.paymentIntents.create({
-    amount: product.price * 100, // cents
-    currency: "usd",
-    metadata: {
-      productId: product._id.toString(),
-      userId: req.user._id.toString()
-    }
-  });
+  amount: product.price * 100,
+  currency: "usd",
+  automatic_payment_methods: {
+    enabled: true,
+    allow_redirects: "never"
+  },
+  metadata: {
+    productId: product._id.toString(),
+    userId: req.user._id.toString()
+  }
+});
+
 
   // Save order in DB
   const order = await Order.create({

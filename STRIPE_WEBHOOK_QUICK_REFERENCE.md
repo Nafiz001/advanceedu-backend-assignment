@@ -6,7 +6,6 @@
 ```javascript
 // ❌ WRONG (what you had)
 exports.handleStripeWebhook = async (req, res) => {
-  console.log("🔥 Stripe webhook hit");  // This gets overridden!
 
 const stripe = require("../config/stripe");
 exports.handleStripeWebhook = async (req, res) => {  // This one wins

@@ -8,7 +8,6 @@ Your webhook was not updating MongoDB orders because of a **critical bug in the 
 ```javascript
 // ❌ BAD CODE (webhook.controller.js - lines 1-60)
 exports.handleStripeWebhook = async (req, res) => {
-  console.log("🔥 Stripe webhook hit");  // Line 1: First declaration
 
 const stripe = require("../config/stripe");
 const Order = require("../models/Order");

@@ -6,7 +6,7 @@ const Order = require("../models/Order");
 // @access  Public (verified by Stripe signature)
 exports.handleStripeWebhook = async (req, res) => {
   console.log("🔥 Stripe webhook endpoint hit");
-  
+
   const sig = req.headers["stripe-signature"];
 
   if (!sig) {
@@ -29,40 +29,33 @@ exports.handleStripeWebhook = async (req, res) => {
     return res.status(400).send(`Webhook Error: ${err.message}`);
   }
 
-  console.log(`📨 Event type received: ${event.type}`);
-
   // Handle event types
   switch (event.type) {
     case "payment_intent.succeeded": {
       const paymentIntent = event.data.object;
 
-      console.log("💳 PaymentIntent succeeded:");
-      console.log(`   - PaymentIntent ID: ${paymentIntent.id}`);
-      console.log(`   - Amount: ${paymentIntent.amount / 100} ${paymentIntent.currency.toUpperCase()}`);
-      console.log(`   - Status: ${paymentIntent.status}`);
 
       try {
+        const orderQuery = paymentIntent.metadata?.orderId
+          ? { _id: paymentIntent.metadata.orderId }
+          : { paymentIntentId: paymentIntent.id };
+
         // Find and update the order
         const updatedOrder = await Order.findOneAndUpdate(
-          { paymentIntentId: paymentIntent.id },
+          { ...orderQuery, status: { $ne: "paid" } },
           { status: "paid" },
           { new: true }
         );
 
-        if (updatedOrder) {
-          console.log(`✅ Order updated successfully:`);
-          console.log(`   - Order ID: ${updatedOrder._id}`);
-          console.log(`   - User ID: ${updatedOrder.user}`);
-          console.log(`   - Product ID: ${updatedOrder.product}`);
-          console.log(`   - Amount: ${updatedOrder.amount}`);
-          console.log(`   - Status: ${updatedOrder.status}`);
-        } else {
-          console.warn(`⚠️ No order found with paymentIntentId: ${paymentIntent.id}`);
-          console.warn("   Possible reasons:");
-          console.warn("   - Order was not created in the database");
-          console.warn("   - PaymentIntent ID mismatch");
-          console.warn("   - Order was deleted");
+
+        if (!updatedOrder) {
+          console.warn(
+            `⚠️ payment_intent.succeeded received but order not found or already paid: ${paymentIntent.id}`
+          );
         }
+
+
+
       } catch (dbError) {
         console.error("❌ Database error while updating order:", dbError);
         // Still return 200 to Stripe to prevent retries for DB issues

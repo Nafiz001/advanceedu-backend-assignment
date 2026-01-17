@@ -446,7 +446,7 @@ Insufficient Funds: pm_card_chargeDeclinedInsufficientFunds
   "bcryptjs": "^3.0.3",
   "cors": "^2.8.5",
   "dotenv": "^17.2.3",
-  "express": "^5.2.1",
+  "express": "^4.19.2",
   "express-async-handler": "^1.2.0",
   "jsonwebtoken": "^9.0.3",
   "mongoose": "^9.1.3",
@@ -465,6 +465,14 @@ This is a technical assignment project. For production use, consider:
 - Adding order history endpoint
 - Implementing refund functionality
 
+## 🧠 Design Decisions
+
+- Used Stripe PaymentIntents for secure, asynchronous payment handling
+- Webhook endpoint is isolated with raw body parsing for signature verification
+- Webhook updates are idempotent to handle Stripe retries safely
+- Prices are stored in cents to avoid floating-point issues
+- Environment-based configuration for security and deployment flexibility
+
 ## 📄 License
 
 ISC
@@ -475,13 +483,15 @@ ISC
 - GitHub: [@Nafiz001](https://github.com/Nafiz001)
 - Repository: [advanceedu-backend-assignment](https://github.com/Nafiz001/advanceedu-backend-assignment)
 
-## 📞 Supthe troubleshooting section above
+## 📞 Support
+
+If you encounter any issues:
+
+1. Review the troubleshooting section above
 2. Review the Postman collection examples
 3. Check Render deployment logs
-4. Verify environment variables are correctly setG_GUIDE.md](STRIPE_WEBHOOK_TESTING_GUIDE.md)
-2. Review [FIX_SUMMARY.md](FIX_SUMMARY.md)
-3. Check Render deployment logs
-4. Verify environment variables
+4. Verify environment variables are correctly set
+
 
 ---
 

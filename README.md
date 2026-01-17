@@ -167,8 +167,9 @@ POST /api/webhook          # Handle Stripe webhooks
    {
      "name": "Premium Course",
      "description": "Complete backend course",
-     "price": 49.99
+     "price": 4999
    }
+   # Note: Price is in cents (4999 = $49.99)
    ```
 
 3. **Create Order** (Authenticated)
@@ -396,7 +397,7 @@ Insufficient Funds: pm_card_chargeDeclinedInsufficientFunds
 ### JWT Authentication Failed
 - Check `Authorization` header: `Bearer <token>`
 - Verify `JWT_SECRET` is set
-- Token might be expired (default 30 days)
+- Token might be expired (default 7 days)
 
 ### Stripe Webhook Not Working
 - Verify `STRIPE_WEBHOOK_SECRET` is correct

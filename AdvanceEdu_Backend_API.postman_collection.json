@@ -276,14 +276,14 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"Premium Course\",\n  \"description\": \"Complete backend development course\",\n  \"price\": 49.99\n}"
+              "raw": "{\n  \"name\": \"Premium Course\",\n  \"description\": \"Complete backend development course\",\n  \"price\": 4999\n}"
             },
             "url": {
               "raw": "{{base_url}}/api/products",
               "host": ["{{base_url}}"],
               "path": ["api", "products"]
             },
-            "description": "Create a new product/course"
+            "description": "Create a new product/course\n\nNote: Price is in cents (4999 = $49.99)"
           },
           "response": [
             {
@@ -293,7 +293,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"name\": \"Premium Course\",\n  \"description\": \"Complete backend development course\",\n  \"price\": 49.99\n}",
+                  "raw": "{\n  \"name\": \"Premium Course\",\n  \"description\": \"Complete backend development course\",\n  \"price\": 4999\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -310,7 +310,7 @@
               "code": 201,
               "_postman_previewlanguage": "json",
               "header": [],
-              "body": "{\n  \"_id\": \"product123\",\n  \"name\": \"Premium Course\",\n  \"description\": \"Complete backend development course\",\n  \"price\": 49.99,\n  \"createdAt\": \"2026-01-17T10:00:00.000Z\"\n}"
+              "body": "{\n  \"_id\": \"product123\",\n  \"name\": \"Premium Course\",\n  \"description\": \"Complete backend development course\",\n  \"price\": 4999,\n  \"createdAt\": \"2026-01-17T10:00:00.000Z\"\n}"
             }
           ]
         },
@@ -342,7 +342,7 @@
               "code": 200,
               "_postman_previewlanguage": "json",
               "header": [],
-              "body": "[\n  {\n    \"_id\": \"product123\",\n    \"name\": \"Premium Course\",\n    \"description\": \"Complete backend development course\",\n    \"price\": 49.99,\n    \"createdAt\": \"2026-01-17T10:00:00.000Z\"\n  }\n]"
+              "body": "[\n  {\n    \"_id\": \"product123\",\n    \"name\": \"Premium Course\",\n    \"description\": \"Complete backend development course\",\n    \"price\": 4999,\n    \"createdAt\": \"2026-01-17T10:00:00.000Z\"\n  }\n]"
             }
           ]
         }
@@ -463,7 +463,7 @@
               "host": ["{{base_url}}"],
               "path": ["api", "webhook"]
             },
-            "description": "⚠️ This endpoint is for Stripe webhooks only!\n\nDO NOT test manually - signature verification will fail.\n\nTo test webhooks:\n1. Start Stripe CLI listener:\n   ```\n   stripe listen --forward-to http://localhost:5000/api/webhook\n   ```\n2. Create an order\n3. Confirm PaymentIntent:\n   ```\n   stripe payment_intents confirm <payment_intent_id> --payment-method pm_card_visa\n   ```\n4. Check server logs for webhook processing"
+            "description": "⚠️ WARNING: This request is DOCUMENTATION ONLY.\n\nStripe webhooks CANNOT be tested manually due to signature verification.\nAttempting to send this request will result in a 400 error.\n\n✅ To properly test webhooks:\n1. Start Stripe CLI listener:\n   ```\n   stripe listen --forward-to http://localhost:5000/api/webhook\n   ```\n2. Create an order via Postman\n3. Confirm PaymentIntent using Stripe CLI:\n   ```\n   stripe payment_intents confirm <payment_intent_id> --payment-method pm_card_visa\n   ```\n4. Check server logs for webhook processing\n\nThis request is included only to document the webhook payload structure."
           },
           "response": []
         }

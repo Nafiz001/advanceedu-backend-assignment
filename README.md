@@ -4,9 +4,9 @@ A complete REST API backend built with **Node.js**, **Express**, **MongoDB**, an
 
 ## 🚀 Live Demo
 
-- **API Base URL**: `https://your-app.onrender.com` _(Update after deployment)_
-- **Webhook Endpoint**: `https://your-app.onrender.com/api/webhook`
-- **Health Check**: [https://your-app.onrender.com/](https://your-app.onrender.com/)
+- **API Base URL**: `https://advanceedu-backend.onrender.com`
+- **Webhook Endpoint**: `https://advanceedu-backend.onrender.com/api/webhook`
+- **Health Check**: [https://advanceedu-backend.onrender.com/](https://advanceedu-backend.onrender.com/)
 
 ## 📋 Features
 
@@ -243,7 +243,7 @@ base_url = http://localhost:5000
 
 For production:
 ```
-base_url = https://your-app.onrender.com
+base_url = https://advanceedu-backend.onrender.com
 ```
 
 ### Testing Flow
@@ -343,28 +343,27 @@ Insufficient Funds: pm_card_chargeDeclinedInsufficientFunds
 
 5. **Deploy**
    - Wait 2-3 minutes
-   - Get URL: `https://your-app.onrender.com`
+   - Get URL: `https://advanceedu-backend.onrender.com`
 
 6. **Configure Stripe Webhook**
    - Stripe Dashboard → Webhooks → Add endpoint
-   - URL: `https://your-app.onrender.com/api/webhook`
+   - URL: `https://advanceedu-backend.onrender.com/api/webhook`
    - Events: `payment_intent.succeeded`, `payment_intent.payment_failed`
    - Copy webhook secret
    - Add to Render environment variables
 
 7. **Test Production**
    ```bash
-   curl https://your-app.onrender.com/
+   curl https://advanceedu-backend.onrender.com/
    ```
 
-**Detailed Guide**: See [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md)
+**Detailed Guide**: See sections below for complete setup and testing instructions.
 
 ## 📚 Documentation
 
-- **[DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md)** - Complete deployment instructions
-- **[STRIPE_WEBHOOK_TESTING_GUIDE.md](STRIPE_WEBHOOK_TESTING_GUIDE.md)** - Webhook testing guide
-- **[FIX_SUMMARY.md](FIX_SUMMARY.md)** - Webhook troubleshooting
-- **[Postman Collection](AdvanceEdu_Backend_API.postman_collection.json)** - API documentation
+- **[README.md](README.md)** - Complete project documentation
+- **[Postman Collection](AdvanceEdu_Backend_API.postman_collection.json)** - API documentation with examples
+- **[.env.example](.env.example)** - Environment variables template
 
 ## 🔒 Security Features
 
@@ -403,13 +402,16 @@ Insufficient Funds: pm_card_chargeDeclinedInsufficientFunds
 - Verify `STRIPE_WEBHOOK_SECRET` is correct
 - Check webhook signature verification
 - Ensure `express.raw()` middleware is before `express.json()`
-- See [STRIPE_WEBHOOK_TESTING_GUIDE.md](STRIPE_WEBHOOK_TESTING_GUIDE.md)
+- Use Stripe CLI for local testing:
+  ```bash
+  stripe listen --forward-to http://localhost:5000/api/webhook
+  ```
 
 ### Order Status Not Updating
 - Verify webhook is being triggered (check Stripe Dashboard)
 - Check server logs for webhook processing
 - Ensure PaymentIntent ID matches order in database
-- See [FIX_SUMMARY.md](FIX_SUMMARY.md)
+- Create a new order for each test (PaymentIntents are idempotent)
 
 ## 📊 API Response Format
 
@@ -472,10 +474,10 @@ ISC
 - GitHub: [@Nafiz001](https://github.com/Nafiz001)
 - Repository: [advanceedu-backend-assignment](https://github.com/Nafiz001/advanceedu-backend-assignment)
 
-## 📞 Support
-
-For issues or questions:
-1. Check [STRIPE_WEBHOOK_TESTING_GUIDE.md](STRIPE_WEBHOOK_TESTING_GUIDE.md)
+## 📞 Supthe troubleshooting section above
+2. Review the Postman collection examples
+3. Check Render deployment logs
+4. Verify environment variables are correctly setG_GUIDE.md](STRIPE_WEBHOOK_TESTING_GUIDE.md)
 2. Review [FIX_SUMMARY.md](FIX_SUMMARY.md)
 3. Check Render deployment logs
 4. Verify environment variables

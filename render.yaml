@@ -1,7 +1,7 @@
 services:
   - type: web
     name: advanceedu-backend
-    env: node
+    runtime: node
     region: oregon
     plan: free
     buildCommand: npm install

@@ -39,4 +39,25 @@ app.use("/api/products", productRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/webhook", webhookRoutes);
 
+// 404 Handler - must come after all routes
+app.use((req, res) => {
+  res.status(404).json({
+    status: "error",
+    message: `Cannot ${req.method} ${req.path}`
+  });
+});
+
+// Centralized Error Handler
+app.use((err, req, res, next) => {
+  console.error("❌ Error:", err.message);
+  
+  const statusCode = err.statusCode || res.statusCode || 500;
+  
+  res.status(statusCode).json({
+    status: "error",
+    message: err.message || "Internal server error",
+    ...(process.env.NODE_ENV === "development" && { stack: err.stack })
+  });
+});
+
 module.exports = app;
